@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Maharashtra — Explore • Discover • Enjoy</title>
+<style>
+  /* ---------- BASE ---------- */
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --blue: #2874f0;
+    --blue-dark: #1a4fa0;
+    --yellow: #ffe11b;
+    --ink: #172337;
+    --muted: #6b7280;
+    --bg: #f1f3f6;
+    --radius: 16px;
+  }
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  [hidden] { display: none !important; }
+
+  /* ---------- HEADER (Flipkart style) ---------- */
+  .topbar {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 14px;
+    padding: 14px 28px;
+    background: linear-gradient(90deg, var(--blue) 0%, var(--blue-dark) 100%);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  }
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .logo {
+    width: 46px; height: 46px;
+    display: grid; place-items: center;
+    border-radius: 12px;
+    background: var(--yellow);
+    color: var(--blue-dark);
+    font-size: 26px; font-weight: 800;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  }
+  .brand h1 {
+    font-size: 1.55rem;
+    letter-spacing: 0.5px;
+    color: #fff;
+    font-weight: 700;
+    line-height: 1.1;
+  }
+  .tagline {
+    font-size: 0.72rem;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--yellow);
+    font-weight: 600;
+  }
+  .nav { display: flex; gap: 8px; flex-wrap: wrap; }
+  .nav button {
+    border: none;
+    background: rgba(255, 255, 255, 0.14);
+    color: #fff;
+    padding: 9px 18px;
+    border-radius: 999px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.25s;
+  }
+  .nav button:hover { background: var(--yellow); color: var(--blue-dark); transform: translateY(-2px); }
+
+  /* ---------- LAYOUT ---------- */
+  .wrap { max-width: 1150px; margin: 0 auto; padding: 0 20px 60px; }
+
+  /* ---------- HERO ---------- */
+  .hero {
+    margin: 26px 0 34px;
+    padding: 52px 30px;
+    text-align: center;
+    color: #fff;
+    border-radius: 26px;
+    background: radial-gradient(circle at 15% 20%, #4a8bff 0%, #1a4fa0 65%, #123a7a 100%);
+    box-shadow: 0 18px 40px rgba(26, 79, 160, 0.35);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::after {
+    content: "";
+    position: absolute;
+    width: 320px; height: 320px;
+    right: -110px; top: -110px;
+    background: rgba(255, 225, 27, 0.18);
+    border-radius: 50%;
+  }
+  .hero h2 { font-size: clamp(1.6rem, 4vw, 2.5rem); margin-bottom: 10px; }
+  .hero p { max-width: 620px; margin: 0 auto; color: #dbe6ff; font-size: 1rem; }
+  .hero .badges { margin-top: 22px; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+  .hero .badges span {
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    padding: 7px 16px;
+    border-radius: 999px;
+    font-size: 0.82rem;
+    font-weight: 600;
+  }
+
+  /* ---------- CATEGORY CARDS ---------- */
+  .sec-title { font-size: 1.35rem; margin-bottom: 4px; }
+  .sec-sub { color: var(--muted); font-size: 0.92rem; margin-bottom: 22px; }
+
+  .cat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(265px, 1fr));
+    gap: 22px;
+  }
+  .cat-card {
+    background: #fff;
+    border-radius: var(--radius);
+    padding: 30px 24px;
+    text-align: left;
+    border: 1px solid #e6e9f0;
+    cursor: pointer;
+    transition: 0.28s ease;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 14px rgba(23, 35, 55, 0.06);
+  }
+  .cat-card::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 5px;
+    background: linear-gradient(90deg, var(--blue), var(--yellow));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: 0.35s;
+  }
+  .cat-card:hover { transform: translateY(-8px); box-shadow: 0 18px 34px rgba(40, 116, 240, 0.2); border-color: #cfe0ff; }
+  .cat-card:hover::before { transform: scaleX(1); }
+  .cat-icon {
+    width: 66px; height: 66px;
+    display: grid; place-items: center;
+    font-size: 32px;
+    border-radius: 18px;
+    margin-bottom: 16px;
+    background: #eef4ff;
+  }
+  .cat-card h3 { font-size: 1.2rem; margin-bottom: 6px; }
+  .cat-card p { color: var(--muted); font-size: 0.9rem; margin-bottom: 18px; }
+  .cat-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--blue);
+    font-weight: 700;
+    font-size: 0.9rem;
+  }
+  .cat-card:hover .cat-link { gap: 12px; }
+  .cat-link { transition: gap 0.25s; }
+
+  /* ---------- BACK BUTTON ---------- */
+  .back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin: 26px 0 18px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 999px;
+    background: #fff;
+    color: var(--blue);
+    font-weight: 700;
+    font-size: 0.88rem;
+    cursor: pointer;
+    box-shadow: 0 3px 12px rgba(23, 35, 55, 0.12);
+    transition: 0.25s;
+  }
+  .back-btn:hover { background: var(--blue); color: #fff; transform: translateX(-4px); }
+
+  .detail-head { margin-bottom: 24px; }
+  .detail-head h2 { font-size: 1.7rem; display: flex; align-items: center; gap: 10px; }
+  .detail-head p { color: var(--muted); font-size: 0.95rem; margin-top: 4px; }
+
+  /* ---------- ITEM CARDS ---------- */
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 24px;
+  }
+  .item-card {
+    background: #fff;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid #e6e9f0;
+    box-shadow: 0 6px 18px rgba(23, 35, 55, 0.07);
+    transition: 0.3s ease;
+    display: flex;
+    flex-direction: column;
+  }
+  .item-card:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(23, 35, 55, 0.15); }
+
+  .item-banner {
+    position: relative;
+    height: 130px;
+    display: grid;
+    place-items: center;
+    font-size: 56px;
+  }
+  .rating {
+    position: absolute;
+    top: 12px; right: 12px;
+    background: rgba(255, 255, 255, 0.95);
+    color: #172337;
+    font-size: 0.78rem;
+    font-weight: 800;
+    padding: 4px 10px;
+    border-radius: 999px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  }
+  .item-body { padding: 20px 22px 24px; flex: 1; display: flex; flex-direction: column; }
+  .item-body h3 { font-size: 1.15rem; margin-bottom: 4px; }
+  .place { color: var(--blue); font-size: 0.82rem; font-weight: 700; margin-bottom: 10px; }
+  .desc { color: #4b5563; font-size: 0.9rem; margin-bottom: 14px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+  .chip {
+    background: #eef4ff;
+    color: #1a4fa0;
+    font-size: 0.74rem;
+    font-weight: 700;
+    padding: 5px 12px;
+    border-radius: 999px;
+  }
+  .extra {
+    margin-top: auto;
+    padding-top: 14px;
+    border-top: 1px dashed #e0e4ec;
+    font-size: 0.86rem;
+    color: #374151;
+  }
+  .extra strong { color: var(--blue-dark); }
+
+  /* ---------- FOOTER ---------- */
+  footer {
+    text-align: center;
+    padding: 26px 20px 40px;
+    color: var(--muted);
+    font-size: 0.85rem;
+  }
+  footer strong { color: var(--blue); }
+
+  @media (max-width: 600px) {
+    .topbar { padding: 12px 16px; }
+    .brand h1 { font-size: 1.25rem; }
+    .hero { padding: 38px 20px; }
+    .cards { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ================= HEADER ================= -->
+<header class="topbar">
+  <div class="brand">
+    <div class="logo">M</div>
+    <div>
+      <h1>Maharashtra</h1>
+      <div class="tagline">Explore • Discover • Enjoy</div>
+    </div>
+  </div>
+  <nav class="nav">
+    <button onclick="showHome()">Home</button>
+    <button onclick="openCategory('tourist')">🛕 Tourist Places</button>
+    <button onclick="openCategory('cafes')">☕ Cafes</button>
+    <button onclick="openCategory('hotels')">🏨 Hotels</button>
+  </nav>
+</header>
+
+<!-- ================= MAIN ================= -->
+<main class="wrap">
+
+  <!-- ---------- HOME VIEW ---------- -->
+  <section id="home">
+    <div class="hero">
+      <h2>Welcome to Maharashtra 🌊</h2>
+      <p>Land of ancient temples, buzzing Irani cafes, misty hill stations and grand heritage hotels. Pick a category below to begin your journey.</p>
+      <div class="badges">
+        <span>🛕 Temples</span>
+        <span>☕ Cafes</span>
+        <span>🏨 Hotels</span>
+        <span>🍛 Local Food</span>
+      </div>
+    </div>
+
+    <h2 class="sec-title">What are you looking for?</h2>
+    <p class="sec-sub">Tap any card to explore the best of Maharashtra</p>
+
+    <div class="cat-grid">
+      <div class="cat-card" onclick="openCategory('tourist')">
+        <div class="cat-icon">🛕</div>
+        <h3>Tourist Places</h3>
+        <p>Famous temples, their history and the must-see spots inside.</p>
+        <span class="cat-link">Explore temples →</span>
+      </div>
+
+      <div class="cat-card" onclick="openCategory('cafes')">
+        <div class="cat-icon">☕</div>
+        <h3>Cafes</h3>
+        <p>Iconic Irani cafes and seaside hangouts — and what they're famous for.</p>
+        <span class="cat-link">Explore cafes →</span>
+      </div>
+
+      <div class="cat-card" onclick="openCategory('hotels')">
+        <div class="cat-icon">🏨</div>
+        <h3>Hotels</h3>
+        <p>From a legendary heritage palace to a relaxing hill resort.</p>
+        <span class="cat-link">Explore hotels →</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- DETAIL VIEW ---------- -->
+  <section id="detail" hidden></section>
+
+</main>
+
+<footer>
+  Made with ❤️ for <strong>Maharashtra</strong> — Maharashtra Tourism Demo
+</footer>
+
+<!-- ================= SCRIPT ================= -->
+<script>
+/* ---------------- DATA ---------------- */
+const DATA = {
+  tourist: {
+    icon: "🛕",
+    title: "Tourist Places",
+    subtitle: "Two of Maharashtra's most beloved temples",
+    items: [
+      {
+        name: "Shirdi Sai Baba Temple",
+        place: "Shirdi, Ahmednagar District",
+        emoji: "🛕",
+        gradient: "linear-gradient(135deg,#f7971e,#ffd200)",
+        rating: "4.8",
+        desc: "One of India's most visited shrines, dedicated to the saint Sai Baba who lived and taught here for over 60 years. The temple complex welcomes lakhs of devotees every week and is famous for its peaceful, all-faith atmosphere.",
+        tags: ["Samadhi Mandir", "Dwarkamai", "Gurusthan"],
+        extraLabel: "Must see",
+        extra: "The marble Samadhi Mandir where Baba's tomb rests, the Dwarkamai mosque where he sat by the sacred fire, and the Gurusthan neem tree."
+      },
+      {
+        name: "Siddhivinayak Temple",
+        place: "Prabhadevi, Mumbai",
+        emoji: "🐘",
+        gradient: "linear-gradient(135deg,#8e2de2,#4a00e0)",
+        rating: "4.7",
+        desc: "Built in 1801, this is Mumbai's most famous Ganesha temple. The idol of Lord Ganesha is carved from a single black stone and is unique because its trunk turns to the right — a rare and highly auspicious form.",
+        tags: ["Golden Roof", "Tuesday Darshan", "Mumbai Icon"],
+        extraLabel: "Must see",
+        extra: "The gold-plated inner sanctum roof, the beautifully carved wooden doors, and the evening aarti that draws huge crowds of devotees."
+      }
+    ]
+  },
+
+  cafes: {
+    icon: "☕",
+    title: "Cafes",
+    subtitle: "Legendary cafes and the food they are famous for",
+    items: [
+      {
+        name: "Cafe Goodluck",
+        place: "Deccan Gymkhana, Pune",
+        emoji: "🍞",
+        gradient: "linear-gradient(135deg,#11998e,#38ef7d)",
+        rating: "4.5",
+        desc: "Running since 1934, this Irani-style cafe is a Pune institution. Students, writers and families have shared tables here for generations over endless cups of chai and freshly baked buns.",
+        tags: ["Irani Chai", "Since 1934", "Budget Friendly"],
+        extraLabel: "Famous for",
+        extra: "Misal Pav, Bun Maska dipped in Irani Chai, Chicken Biryani and their creamy Caramel Custard."
+      },
+      {
+        name: "Cafe Mondegar",
+        place: "Colaba Causeway, Mumbai",
+        emoji: "🍺",
+        gradient: "linear-gradient(135deg,#f12711,#f5af19)",
+        rating: "4.4",
+        desc: "Open since 1932, 'Mondegar' is Mumbai's original hippie hangout — a tiny corner cafe with a vintage jukebox, walls painted by cartoonist Mario Miranda, and tables that spill onto the street.",
+        tags: ["Jukebox", "Sea View", "Since 1932"],
+        extraLabel: "Famous for",
+        extra: "Kejriwal Toast (cheese-chilli toast topped with eggs), chilled draught beer, sizzlers and a hearty English breakfast."
+      }
+    ]
+  },
+
+  hotels: {
+    icon: "🏨",
+    title: "Hotels",
+    subtitle: "A heritage icon and a relaxing hill resort",
+    items: [
+      {
+        name: "The Taj Mahal Palace",
+        place: "Colaba, Mumbai",
+        emoji: "🏛️",
+        gradient: "linear-gradient(135deg,#b92b27,#1565c0)",
+        rating: "4.9",
+        desc: "Opened in 1903, this red-domed heritage hotel stands right beside the Gateway of India. It is India's most iconic luxury address, blending Moorish architecture with over a century of history.",
+        tags: ["Heritage", "Sea Facing", "5-Star"],
+        extraLabel: "Highlights",
+        extra: "Sea-facing Palace Wing rooms, the famous Sea Lounge high tea, and award-winning restaurants like Wasabi and Golden Dragon."
+      },
+      {
+        name: "Fariyas Resort",
+        place: "Lonavala, Pune District",
+        emoji: "⛰️",
+        gradient: "linear-gradient(135deg,#0f9b0f,#00d2a8)",
+        rating: "4.3",
+        desc: "A five-star hill resort tucked into the Sahyadri mountains of Lonavala. It is a favourite weekend escape from Mumbai and Pune, with valley views, lush gardens and a large outdoor pool.",
+        tags: ["Hill Resort", "Pool", "Family Friendly"],
+        extraLabel: "Highlights",
+        extra: "Valley-view rooms, a multi-cuisine restaurant, kids' play zone — and it's just minutes from Bhushi Dam and Tiger Point."
+      }
+    ]
+  }
+};
+
+/* ---------------- VIEW LOGIC ---------------- */
+const homeEl = document.getElementById("home");
+const detailEl = document.getElementById("detail");
+
+function showHome() {
+  detailEl.hidden = true;
+  detailEl.innerHTML = "";
+  homeEl.hidden = false;
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function itemCard(item) {
+  const chips = item.tags.map(t => `<span class="chip">${t}</span>`).join("");
+  return `
+    <article class="item-card">
+      <div class="item-banner" style="background:${item.gradient}">
+        <span>${item.emoji}</span>
+        <span class="rating">★ ${item.rating}</span>
+      </div>
+      <div class="item-body">
+        <h3>${item.name}</h3>
+        <p class="place">📍 ${item.place}</p>
+        <p class="desc">${item.desc}</p>
+        <div class="chips">${chips}</div>
+        <p class="extra"><strong>${item.extraLabel}:</strong> ${item.extra}</p>
+      </div>
+    </article>
+  `;
+}
+
+function openCategory(key) {
+  const cat = DATA[key];
+  if (!cat) return;
+
+  detailEl.innerHTML = `
+    <button class="back-btn" onclick="showHome()">← Back to Home</button>
+    <div class="detail-head">
+      <h2>${cat.icon} ${cat.title}</h2>
+      <p>${cat.subtitle}</p>
+    </div>
+    <div class="cards">${cat.items.map(itemCard).join("")}</div>
+  `;
+
+  homeEl.hidden = true;
+  detailEl.hidden = false;
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+</script>
+</body>
+</html>
